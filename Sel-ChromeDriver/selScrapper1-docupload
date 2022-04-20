@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-DRIVER_PATH = '/home/rt890934/selenium_csp/chromedriver'
+DRIVER_PATH = '/home/<user>/selenium_csp/chromedriver'
 print(sys.argv[1])
 print(sys.argv[2])
 options = Options()
