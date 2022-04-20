@@ -15,7 +15,7 @@ options.add_argument("--window-size=1920,1200")
 
 driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-driver.get("https://portal.broadcom.com/group/support/docsafe/downloads")
+driver.get("https://<url>/downloads")
 print(driver.title)
 elem = driver.find_element_by_name("username")
 elem.clear()
