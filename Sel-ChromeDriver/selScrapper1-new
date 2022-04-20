@@ -1,0 +1,63 @@
+import sys
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+DRIVER_PATH = '/home/<user>/selenium_csp/chromedriver'
+print(sys.argv[1])
+print(sys.argv[2])
+options = Options()
+options.headless = True
+options.add_argument("--window-size=1920,1200")
+
+driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+driver.get("https://<url>/downloads")
+print(driver.title)
+elem = driver.find_element_by_name("username")
+elem.clear()
+elem.send_keys("<user>")
+elem = driver.find_element_by_id("idp-discovery-submit")
+elem.click()
+driver.implicitly_wait(5)
+elem = driver.find_element_by_id("okta-signin-password")
+#elem.send_keys("<pwd>")
+elem.send_keys(sys.argv[2])
+elem = driver.find_element_by_id("mybrcm-toc")
+elem.click()
+driver.implicitly_wait(5)
+driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+elem = driver.find_element_by_id("okta-signin-submit")
+actions = ActionChains(driver)
+actions.move_to_element(elem).click()
+#actions.click(elem)
+actions.perform()
+driver.implicitly_wait(15)
+wait = WebDriverWait(driver, 10)
+print("login successful")
+elem = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, 'Software/File Delivery')))
+#elem = driver.find_element_by_link_text('Software/File Delivery')
+elem.click()
+elem = driver.find_element_by_link_text('New Software/Draft')
+elem.click()
+elem = driver.find_element_by_xpath("//label[contains(.,'Use software uploaded via FTP')]")
+elem.click()
+select = Select(driver.find_element_by_id('selectftpfile'))
+#select.click()
+#select.select_by_value("5.04L.01rdkb_file_manifest.txt")
+#select.select_by_index(1)
+select.select_by_visible_text("5.04L.01rdkb_file_manifest.txt")
+elem = driver.find_element_by_id("softwaretitle")
+elem.send_keys("Softwate test file")
+elem = driver.find_element_by_id("format")
+select = Select(driver.find_element_by_id('format'))
+select.select_by_visible_text("Binary")
+select = Select(driver.find_element_by_id('category'))
+select.select_by_visible_text("Others")
+print("script completed")
+driver.save_screenshot("screenshot.png")
+#elem.send_keys(keys.RETURN)
+driver.quit()
